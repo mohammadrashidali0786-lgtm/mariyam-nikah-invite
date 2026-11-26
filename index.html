@@ -37,6 +37,20 @@
     }
 
     /* =========================================================================
+       STRICT LOCK BEFORE TAP TO OPEN (PREVENTS PAGE 2 FROM SCROLLING BEHIND)
+       ========================================================================= */
+    body.locked-scroll {
+      overflow: hidden;
+      height: 100vh;
+      height: 100dvh;
+      touch-action: none;
+    }
+
+    body.locked-scroll .scroll-stage {
+      display: none;
+    }
+
+    /* =========================================================================
        PAGE 2 OUTER BACKDROP: DESKTOP + PORTRAIT-ROTATED MOBILE LAYER
        ========================================================================= */
     body {
@@ -53,11 +67,15 @@
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: -1;
+      pointer-events: none;
       background-color: var(--emerald-deep);
       background-image:
-        linear-gradient(180deg, rgba(2, 20, 14, 0.30) 0%, rgba(2, 20, 14, 0.60) 100%),
+        linear-gradient(180deg, rgba(2, 20, 14, 0.28) 0%, rgba(2, 20, 14, 0.56) 100%),
         url("outer-bg.png"),
         radial-gradient(circle at 50% 25%, #0c4735 0%, #021710 85%);
       background-size: cover, cover, cover;
@@ -71,7 +89,10 @@
        ========================================================================= */
     #envelope-overlay {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background-color: var(--emerald-deep);
       z-index: 9999;
       display: flex;
@@ -82,16 +103,21 @@
       text-align: center;
       transition: opacity 0.85s ease, visibility 0.85s ease;
       overflow: hidden;
+      touch-action: none;
     }
 
     #envelope-overlay::before {
       content: "";
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 0;
+      pointer-events: none;
       background-color: var(--emerald-deep);
       background-image:
-        radial-gradient(circle at center, rgba(3, 24, 17, 0.28) 0%, rgba(2, 16, 11, 0.68) 100%),
+        radial-gradient(circle at center, rgba(3, 24, 17, 0.25) 0%, rgba(2, 16, 11, 0.62) 100%),
         url("outer-bg.png"),
         radial-gradient(circle at 50% 45%, #0d4d3a 0%, #021710 85%);
       background-size: cover, cover, cover;
@@ -965,14 +991,15 @@
        MOBILE PORTRAIT FIXES (ROTATED MANDALA BACKDROP + CLEAN ARCH FIT)
        ========================================================================= */
     @media (max-width: 600px) {
-      /* Rotate landscape outer-bg.png 90deg so golden mandalas & corners frame mobile top & bottom */
+      /* Properly centered 90deg rotation so golden mandalas frame mobile top & bottom */
       body::before,
       #envelope-overlay::before {
-        width: 105vh;
-        height: 105vw;
         top: 50%;
         left: 50%;
-        inset: auto;
+        right: auto;
+        bottom: auto;
+        width: 106vh;
+        height: 106vw;
         transform: translate(-50%, -50%) rotate(90deg);
         background-size: cover, cover, cover;
         background-position: center center, center center, center center;
@@ -1029,7 +1056,7 @@
     }
   </style>
 </head>
-<body>
+<body class="locked-scroll">
 
   <!-- On-Demand Loop Nikah Khutbah Audio (Loads on Tap for Instant Background Speed) -->
   <audio id="nikah-audio" loop preload="none" playsinline>
@@ -1113,7 +1140,7 @@
           <p class="host-intro">
             <strong>Mr. Mohammad Shaukat Ali</strong>
             <span class="host-lineage">(S/o Marhoom Mohammad Salahuddin)</span>
-            <span id="host-invite-phrase">cordially invites you &amp; your family to the auspicious Nikah ceremony of his beloved daughter</span>
+            <span id="host-invite-phrase">cordially invites you & your family to the auspicious Nikah ceremony of his beloved daughter</span>
           </p>
         </div>
 
@@ -1179,7 +1206,7 @@
         <div class="invitation-pass-banner" id="invitation-pass-banner">
           <div class="pass-kicker">Invitation Pass</div>
           <div class="pass-title" id="pass-title">With Family Invitation</div>
-          <div class="pass-detail" id="pass-detail">You &amp; your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah &amp; Rukhsati)</div>
+          <div class="pass-detail" id="pass-detail">You & your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah & Rukhsati)</div>
         </div>
 
         <h2 class="section-title">Wedding Events & Venues</h2>
@@ -1608,6 +1635,7 @@
     // LEVEL 2: CONTINUOUS LOOP NIKAH KHUTBAH AUDIO CONTROLLER
     // =========================================================================
     let isAudioPlaying = false;
+    let scratchInitialized = false;
 
     function startNikahKhutbahLoop() {
       const audioEl = document.getElementById("nikah-audio");
@@ -1634,10 +1662,20 @@
     }
 
     function openInvitation() {
+      document.body.classList.remove("locked-scroll");
+      window.scrollTo(0, 0);
       document.getElementById("envelope-overlay").classList.add("opened");
+
       const toggleBtn = document.getElementById("audio-toggle");
       toggleBtn.style.display = "flex";
       startNikahKhutbahLoop();
+
+      if (!scratchInitialized) {
+        requestAnimationFrame(() => {
+          initScratchCard();
+          scratchInitialized = true;
+        });
+      }
     }
 
     function toggleAudio() {
@@ -1683,6 +1721,7 @@
     function initScratchCard() {
       const canvas = document.getElementById("scratch-canvas");
       const box = document.getElementById("scratch-box");
+      if (!canvas || !box || box.offsetWidth === 0) return;
       const ctx = canvas.getContext("2d");
 
       canvas.width = box.offsetWidth;
@@ -1908,9 +1947,9 @@
 
     // Boot Application
     window.addEventListener("DOMContentLoaded", () => {
+      window.scrollTo(0, 0);
       attachStrictInputGuards();
       initializeLockedState();
-      initScratchCard();
     });
   </script>
 </body>
