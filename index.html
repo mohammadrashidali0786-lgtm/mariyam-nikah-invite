@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nikah Invitation | Mariyam Shaukat & Md. Raisul Azam</title>
 
-  <!-- High-Priority Preload for Instant Background Display on Mobile -->
+  <!-- High-Priority Preload for Instant Background Display -->
   <link rel="preload" as="image" href="outer-bg.png" fetchpriority="high" />
   <link rel="preload" as="image" href="card-bg.png" fetchpriority="high" />
 
@@ -37,7 +37,7 @@
     }
 
     /* =========================================================================
-       PAGE 2 OUTER BACKDROP: MOBILE-SAFE FIXED LAYER (outer-bg.png)
+       PAGE 2 OUTER BACKDROP: DESKTOP + PORTRAIT-ROTATED MOBILE LAYER
        ========================================================================= */
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -57,7 +57,7 @@
       z-index: -1;
       background-color: var(--emerald-deep);
       background-image:
-        linear-gradient(180deg, rgba(2, 20, 14, 0.32) 0%, rgba(2, 20, 14, 0.62) 100%),
+        linear-gradient(180deg, rgba(2, 20, 14, 0.30) 0%, rgba(2, 20, 14, 0.60) 100%),
         url("outer-bg.png"),
         radial-gradient(circle at 50% 25%, #0c4735 0%, #021710 85%);
       background-size: cover, cover, cover;
@@ -73,13 +73,6 @@
       position: fixed;
       inset: 0;
       background-color: var(--emerald-deep);
-      background-image:
-        radial-gradient(circle at center, rgba(3, 24, 17, 0.30) 0%, rgba(2, 16, 11, 0.70) 100%),
-        url("outer-bg.png"),
-        radial-gradient(circle at 50% 45%, #0d4d3a 0%, #021710 85%);
-      background-size: cover, cover, cover;
-      background-position: center center, center center, center center;
-      background-repeat: no-repeat;
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -89,6 +82,21 @@
       text-align: center;
       transition: opacity 0.85s ease, visibility 0.85s ease;
       overflow: hidden;
+    }
+
+    #envelope-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-color: var(--emerald-deep);
+      background-image:
+        radial-gradient(circle at center, rgba(3, 24, 17, 0.28) 0%, rgba(2, 16, 11, 0.68) 100%),
+        url("outer-bg.png"),
+        radial-gradient(circle at 50% 45%, #0d4d3a 0%, #021710 85%);
+      background-size: cover, cover, cover;
+      background-position: center center, center center, center center;
+      background-repeat: no-repeat;
     }
 
     #envelope-overlay.opened {
@@ -732,6 +740,19 @@
       transition: border-color 0.2s;
     }
 
+    /* Multi-line Locked Display Box (Prevents Text Clipping on Mobile) */
+    .locked-display-box {
+      background: #f1f4f3;
+      color: #2c3d37;
+      border-color: #d5dedb;
+      font-weight: 600;
+      cursor: not-allowed;
+      line-height: 1.45;
+      white-space: normal;
+      word-wrap: break-word;
+      min-height: 44px;
+    }
+
     #headName {
       text-transform: uppercase;
       font-weight: 700;
@@ -941,9 +962,22 @@
     }
 
     /* =========================================================================
-       MOBILE ARCH FIT FIX (KEEPS TEXT STRICTLY INSIDE CREAM ARCH)
+       MOBILE PORTRAIT FIXES (ROTATED MANDALA BACKDROP + CLEAN ARCH FIT)
        ========================================================================= */
-    @media (max-width: 520px) {
+    @media (max-width: 600px) {
+      /* Rotate landscape outer-bg.png 90deg so golden mandalas & corners frame mobile top & bottom */
+      body::before,
+      #envelope-overlay::before {
+        width: 105vh;
+        height: 105vw;
+        top: 50%;
+        left: 50%;
+        inset: auto;
+        transform: translate(-50%, -50%) rotate(90deg);
+        background-size: cover, cover, cover;
+        background-position: center center, center center, center center;
+      }
+
       .hero-section {
         padding-top: clamp(114px, 32vw, 152px);
         padding-left: 10px;
@@ -951,28 +985,28 @@
       }
 
       .hero-arch-safe {
-        max-width: 66%;
+        max-width: 62%;
         margin: 0 auto 12px;
       }
 
       .ceremony-tag {
-        font-size: clamp(15px, 4.3vw, 18px);
+        font-size: clamp(15px, 4.2vw, 18px);
         margin-bottom: 4px;
       }
 
       .host-intro {
-        font-size: clamp(11.5px, 3.2vw, 13.5px);
+        font-size: clamp(11.5px, 3.1vw, 13.5px);
         line-height: 1.35;
       }
 
       .host-intro strong {
-        font-size: clamp(12px, 3.4vw, 14.5px);
+        font-size: clamp(12px, 3.3vw, 14.5px);
         letter-spacing: 0.2px;
         margin-bottom: 1px;
       }
 
       .host-lineage {
-        font-size: clamp(10.5px, 2.9vw, 12.5px);
+        font-size: clamp(10.5px, 2.8vw, 12.5px);
         margin-bottom: 3px;
       }
 
@@ -986,6 +1020,11 @@
 
       .pass-detail {
         font-size: 13.5px;
+      }
+
+      .form-control {
+        font-size: 13.5px;
+        padding: 10px 12px;
       }
     }
   </style>
@@ -1074,7 +1113,7 @@
           <p class="host-intro">
             <strong>Mr. Mohammad Shaukat Ali</strong>
             <span class="host-lineage">(S/o Marhoom Mohammad Salahuddin)</span>
-            <span id="host-invite-phrase">cordially invites you & your family to the auspicious Nikah ceremony of his beloved daughter</span>
+            <span id="host-invite-phrase">cordially invites you &amp; your family to the auspicious Nikah ceremony of his beloved daughter</span>
           </p>
         </div>
 
@@ -1140,7 +1179,7 @@
         <div class="invitation-pass-banner" id="invitation-pass-banner">
           <div class="pass-kicker">Invitation Pass</div>
           <div class="pass-title" id="pass-title">With Family Invitation</div>
-          <div class="pass-detail" id="pass-detail">You & your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah & Rukhsati)</div>
+          <div class="pass-detail" id="pass-detail">You &amp; your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah &amp; Rukhsati)</div>
         </div>
 
         <h2 class="section-title">Wedding Events & Venues</h2>
@@ -1237,17 +1276,17 @@
 
           <div class="form-group">
             <label class="form-label" for="inviteTypeDisplay">Invitation Category (Locked)</label>
-            <input type="text" id="inviteTypeDisplay" class="form-control" readonly />
+            <div id="inviteTypeDisplay" class="form-control locked-display-box" aria-readonly="true"></div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="allowedEventsDisplay">Invited Ceremonies (Locked)</label>
-            <input type="text" id="allowedEventsDisplay" class="form-control" readonly />
+            <div id="allowedEventsDisplay" class="form-control locked-display-box" aria-readonly="true"></div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="totalGuests">Total Number of Guests Attending *</label>
-            <input type="text" inputmode="numeric" id="totalGuests" class="form-control" placeholder="Enter number of guests attending" required />
+            <input type="text" inputmode="numeric" id="totalGuests" class="form-control" placeholder="Enter total family members" required />
           </div>
 
           <button type="submit" class="submit-btn" id="submit-btn">CONFIRM YOUR PRESENCE</button>
@@ -1540,13 +1579,13 @@
         }
       }
 
-      const inviteTypeInput = document.getElementById("inviteTypeDisplay");
-      const allowedEventsInput = document.getElementById("allowedEventsDisplay");
+      const inviteTypeBox = document.getElementById("inviteTypeDisplay");
+      const allowedEventsBox = document.getElementById("allowedEventsDisplay");
       const totalGuestsInput = document.getElementById("totalGuests");
       const lockBanner = document.getElementById("lock-status-banner");
 
-      inviteTypeInput.value = inviteCategory;
-      allowedEventsInput.value = allowedEventsLabel;
+      inviteTypeBox.textContent = inviteCategory;
+      allowedEventsBox.textContent = allowedEventsLabel;
 
       if (isSingleInvite) {
         totalGuestsInput.value = "1";
@@ -1555,7 +1594,7 @@
         lockBanner.textContent = "🔒 Locked Invitation: Single Person (1 Guest) — Nikah Ceremony";
       } else {
         totalGuestsInput.value = "";
-        totalGuestsInput.placeholder = "Enter number of family members attending";
+        totalGuestsInput.placeholder = "Enter total family members";
         totalGuestsInput.addEventListener("input", function () {
           this.value = this.value.replace(/[^0-9]/g, "");
         });
