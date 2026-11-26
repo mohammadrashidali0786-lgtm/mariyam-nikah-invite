@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nikah Invitation | Mariyam Shaukat & Md. Raisul Azam</title>
 
-  <!-- Preload Exact Background Images for Instant Display -->
-  <link rel="preload" as="image" href="outer-bg.png" />
-  <link rel="preload" as="image" href="card-bg.png" />
+  <!-- High-Priority Preload for Instant Background Display on Mobile -->
+  <link rel="preload" as="image" href="outer-bg.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="card-bg.png" fetchpriority="high" />
 
   <!-- Royal Editorial & Islamic Calligraphy Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -331,14 +331,14 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      padding-top: clamp(152px, 35.5vw, 192px);
+      padding-top: clamp(148px, 35vw, 192px);
       padding-bottom: 22px;
       padding-left: 16px;
       padding-right: 16px;
     }
 
     .hero-arch-safe {
-      max-width: 335px;
+      max-width: 315px;
       margin: 0 auto 16px;
     }
 
@@ -349,14 +349,14 @@
       font-weight: 700;
       color: var(--gold-dark);
       letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .host-intro {
       font-family: 'Cormorant Garamond', serif;
       font-size: 16px;
       font-weight: 600;
-      line-height: 1.48;
+      line-height: 1.45;
       color: var(--text-body);
     }
 
@@ -483,6 +483,45 @@
       color: #364a42;
       text-align: center;
       margin-bottom: 15px;
+    }
+
+    /* Royal Invitation Category Banner (Above Wedding Events & Venues) */
+    .invitation-pass-banner {
+      background: linear-gradient(145deg, var(--emerald-dark) 0%, var(--emerald-main) 100%);
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 14px;
+      padding: 14px 12px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(5, 41, 30, 0.22);
+    }
+
+    .pass-kicker {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .pass-title {
+      font-family: 'Cinzel', serif;
+      font-size: 15.5px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .pass-detail {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #f4f7f5;
+      line-height: 1.4;
     }
 
     /* Scratch Card Section */
@@ -901,20 +940,60 @@
       display: none !important;
     }
 
-    @media (max-width: 440px) {
-      .hero-arch-safe {
-        max-width: 265px;
+    /* =========================================================================
+       MOBILE ARCH FIT FIX (KEEPS TEXT STRICTLY INSIDE CREAM ARCH)
+       ========================================================================= */
+    @media (max-width: 520px) {
+      .hero-section {
+        padding-top: clamp(114px, 32vw, 152px);
+        padding-left: 10px;
+        padding-right: 10px;
       }
+
+      .hero-arch-safe {
+        max-width: 66%;
+        margin: 0 auto 12px;
+      }
+
+      .ceremony-tag {
+        font-size: clamp(15px, 4.3vw, 18px);
+        margin-bottom: 4px;
+      }
+
+      .host-intro {
+        font-size: clamp(11.5px, 3.2vw, 13.5px);
+        line-height: 1.35;
+      }
+
+      .host-intro strong {
+        font-size: clamp(12px, 3.4vw, 14.5px);
+        letter-spacing: 0.2px;
+        margin-bottom: 1px;
+      }
+
+      .host-lineage {
+        font-size: clamp(10.5px, 2.9vw, 12.5px);
+        margin-bottom: 3px;
+      }
+
       .bride-name, .groom-name {
-        font-size: 21px;
+        font-size: 20px;
+      }
+
+      .pass-title {
+        font-size: 14px;
+      }
+
+      .pass-detail {
+        font-size: 13.5px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Continuous Loop Nikah Khutbah Audio -->
-  <audio id="nikah-audio" loop preload="auto" playsinline>
+  <!-- On-Demand Loop Nikah Khutbah Audio (Loads on Tap for Instant Background Speed) -->
+  <audio id="nikah-audio" loop preload="none" playsinline>
     <source src="nikah-khutbah.mp3" type="audio/mpeg" />
     <source src="nikah-khutbah.mp4" type="audio/mp4" />
     <source src="nikah-khutbah.m4a" type="audio/mp4" />
@@ -995,7 +1074,7 @@
           <p class="host-intro">
             <strong>Mr. Mohammad Shaukat Ali</strong>
             <span class="host-lineage">(S/o Marhoom Mohammad Salahuddin)</span>
-            <span id="host-invite-phrase">cordially invites you &amp; your family to the auspicious Nikah ceremony of his beloved daughter</span>
+            <span id="host-invite-phrase">cordially invites you & your family to the auspicious Nikah ceremony of his beloved daughter</span>
           </p>
         </div>
 
@@ -1057,6 +1136,13 @@
 
       <!-- Events & Exact Google Maps Venues -->
       <section class="section-card">
+        <!-- Dynamic Invitation Type Pass Banner -->
+        <div class="invitation-pass-banner" id="invitation-pass-banner">
+          <div class="pass-kicker">Invitation Pass</div>
+          <div class="pass-title" id="pass-title">With Family Invitation</div>
+          <div class="pass-detail" id="pass-detail">You & your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah & Rukhsati)</div>
+        </div>
+
         <h2 class="section-title">Wedding Events & Venues</h2>
         <p class="section-subtitle">Schedule & navigation for your invited ceremonies</p>
 
@@ -1435,6 +1521,25 @@
           "cordially invites you to the auspicious Nikah ceremony of his beloved daughter";
       }
 
+      // Update Royal Invitation Pass Banner above Wedding Events & Venues
+      const passTitle = document.getElementById("pass-title");
+      const passDetail = document.getElementById("pass-detail");
+      if (passTitle && passDetail) {
+        if (isSingleInvite) {
+          passTitle.textContent = "✨ Single Person Invitation ✨";
+          passDetail.textContent =
+            "Personal Invitation (1 Guest) — You are cordially invited to the Nikah & Rukhsati Ceremony only.";
+        } else if (isNikahOnly) {
+          passTitle.textContent = "👑 With Family Invitation 👑";
+          passDetail.textContent =
+            "You & your family are cordially invited to the Nikah & Rukhsati Ceremony.";
+        } else {
+          passTitle.textContent = "👑 With Family Invitation 👑";
+          passDetail.textContent =
+            "You & your family are warmly invited to All Ceremonies (Haldi, Mehendi, Nikah & Rukhsati).";
+        }
+      }
+
       const inviteTypeInput = document.getElementById("inviteTypeDisplay");
       const allowedEventsInput = document.getElementById("allowedEventsDisplay");
       const totalGuestsInput = document.getElementById("totalGuests");
@@ -1767,7 +1872,6 @@
       attachStrictInputGuards();
       initializeLockedState();
       initScratchCard();
-      startNikahKhutbahLoop();
     });
   </script>
 </body>
