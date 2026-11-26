@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nikah Invitation | Mariyam Shaukat & Md. Raisul Azam</title>
 
+  <!-- Preload Exact Background Images for Instant Display -->
+  <link rel="preload" as="image" href="outer-bg.png" />
+  <link rel="preload" as="image" href="card-bg.png" />
+
   <!-- Royal Editorial & Islamic Calligraphy Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,25 +37,33 @@
     }
 
     /* =========================================================================
-       PAGE 2 OUTER BACKDROP: CANVA PRO LUXURY WALLPAPER (outer-bg.jpg)
+       PAGE 2 OUTER BACKDROP: MOBILE-SAFE FIXED LAYER (outer-bg.png)
        ========================================================================= */
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--emerald-deep);
-      background-image:
-        linear-gradient(180deg, rgba(2, 20, 14, 0.35) 0%, rgba(2, 20, 14, 0.65) 100%),
-        url("outer-bg.jpg"),
-        url("outer-bg.png"),
-        radial-gradient(circle at 50% 25%, #0c4735 0%, #021710 85%);
-      background-size: cover, cover, cover, cover;
-      background-position: center center, center center, center center, center;
-      background-attachment: fixed;
       color: var(--text-dark);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       overflow-x: hidden;
       position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-color: var(--emerald-deep);
+      background-image:
+        linear-gradient(180deg, rgba(2, 20, 14, 0.32) 0%, rgba(2, 20, 14, 0.62) 100%),
+        url("outer-bg.png"),
+        radial-gradient(circle at 50% 25%, #0c4735 0%, #021710 85%);
+      background-size: cover, cover, cover;
+      background-position: center center, center center, center center;
+      background-repeat: no-repeat;
+      transform: translateZ(0);
     }
 
     /* =========================================================================
@@ -62,12 +74,12 @@
       inset: 0;
       background-color: var(--emerald-deep);
       background-image:
-        radial-gradient(circle at center, rgba(3, 24, 17, 0.32) 0%, rgba(2, 16, 11, 0.72) 100%),
-        url("outer-bg.jpg"),
+        radial-gradient(circle at center, rgba(3, 24, 17, 0.30) 0%, rgba(2, 16, 11, 0.70) 100%),
         url("outer-bg.png"),
         radial-gradient(circle at 50% 45%, #0d4d3a 0%, #021710 85%);
-      background-size: cover, cover, cover, cover;
-      background-position: center center, center center, center center, center;
+      background-size: cover, cover, cover;
+      background-position: center center, center center, center center;
+      background-repeat: no-repeat;
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -299,12 +311,10 @@
     .invitation-wrapper {
       width: 90%;
       background-color: var(--ivory-canva);
-      background-image:
-        url("card-bg.jpg"),
-        url("card-bg.png");
-      background-size: 100% auto, 100% auto;
-      background-position: top center, top center;
-      background-repeat: no-repeat, no-repeat;
+      background-image: url("card-bg.png");
+      background-size: 100% auto;
+      background-position: top center;
+      background-repeat: no-repeat;
       border-left: 3px solid #c99b26;
       border-right: 3px solid #c99b26;
       box-shadow:
@@ -985,7 +995,7 @@
           <p class="host-intro">
             <strong>Mr. Mohammad Shaukat Ali</strong>
             <span class="host-lineage">(S/o Marhoom Mohammad Salahuddin)</span>
-            cordially invites you & your family to the auspicious Nikah ceremony of his beloved daughter
+            <span id="host-invite-phrase">cordially invites you &amp; your family to the auspicious Nikah ceremony of his beloved daughter</span>
           </p>
         </div>
 
@@ -1417,6 +1427,12 @@
       const preWeddingBlock = document.getElementById("pre-wedding-events");
       if (isNikahOnly && preWeddingBlock) {
         preWeddingBlock.classList.add("hidden-section");
+      }
+
+      const hostInvitePhrase = document.getElementById("host-invite-phrase");
+      if (isSingleInvite && hostInvitePhrase) {
+        hostInvitePhrase.textContent =
+          "cordially invites you to the auspicious Nikah ceremony of his beloved daughter";
       }
 
       const inviteTypeInput = document.getElementById("inviteTypeDisplay");
