@@ -308,6 +308,22 @@
       align-items: center;
     }
 
+    .scroll-stage > .royal-scroll-rod {
+      position: relative !important;
+      z-index: 25 !important;
+      pointer-events: none;
+    }
+
+    .scroll-stage > .royal-scroll-rod:first-of-type {
+      margin-bottom: clamp(-20px, -3.7vw, -11px) !important;
+      filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.42)) !important;
+    }
+
+    .scroll-stage > .royal-scroll-rod:last-of-type {
+      margin-top: clamp(-20px, -3.7vw, -11px) !important;
+      filter: drop-shadow(0 -4px 5px rgba(0, 0, 0, 0.25)) drop-shadow(0 5px 7px rgba(0, 0, 0, 0.3)) !important;
+    }
+
     .royal-scroll-rod {
       width: 100%;
       display: block;
@@ -1140,11 +1156,11 @@
       <rect x="317" y="13.5" width="6" height="21" rx="2" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.7" />
       <rect x="519" y="13.5" width="6" height="21" rx="2" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.7" />
 
-      <rect x="575" y="13" width="5" height="22" rx="2" fill="url(#goldRodCylinder)" />
-      <rect x="581" y="10" width="7" height="28" rx="3" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.8" />
-      <circle cx="600" cy="24" r="14" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="0.9" />
-      <ellipse cx="614" cy="24" rx="5" ry="12" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="0.8" />
       <polygon points="636,24 618,16 618,32" fill="url(#goldFinialSphere)" />
+      <ellipse cx="614" cy="24" rx="5" ry="12" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="1" />
+      <circle cx="600" cy="24" r="14" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="1" />
+      <rect x="581" y="10" width="7" height="28" rx="3" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="1" />
+      <rect x="575" y="13" width="5" height="22" rx="2" fill="url(#goldRodCylinder)" />
     </svg>
 
     <!-- Main Scroll Body (Canva Header + Interactive Invitation) -->
@@ -1249,7 +1265,7 @@
             </a>
           </div>
 
-          <div class="event-item">
+          <div class="event-item" style="margin-bottom: 14px !important;">
             <span class="event-badge">Pre-Wedding Ceremony</span>
             <h3 class="event-name">Mehendi Ceremony</h3>
             <div class="event-datetime">Monday, 30th November 2026 | 7:00 PM</div>
@@ -1418,11 +1434,11 @@
       <rect x="317" y="13.5" width="6" height="21" rx="2" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.7" />
       <rect x="519" y="13.5" width="6" height="21" rx="2" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.7" />
 
-      <rect x="575" y="13" width="5" height="22" rx="2" fill="url(#goldRodCylinder)" />
-      <rect x="581" y="10" width="7" height="28" rx="3" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="0.8" />
-      <circle cx="600" cy="24" r="14" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="0.9" />
-      <ellipse cx="614" cy="24" rx="5" ry="12" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="0.8" />
       <polygon points="636,24 618,16 618,32" fill="url(#goldFinialSphere)" />
+      <ellipse cx="614" cy="24" rx="5" ry="12" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="1" />
+      <circle cx="600" cy="24" r="14" fill="url(#goldFinialSphere)" stroke="#614105" stroke-width="1" />
+      <rect x="581" y="10" width="7" height="28" rx="3" fill="url(#goldRodCylinder)" stroke="#614105" stroke-width="1" />
+      <rect x="575" y="13" width="5" height="22" rx="2" fill="url(#goldRodCylinder)" />
     </svg>
   </div>
 
